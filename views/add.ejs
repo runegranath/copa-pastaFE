@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CV</title>
+    <title>Lägg till kurs</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -16,21 +16,32 @@
     </header>
     <main>
         <h1>Lägg till kurs</h1>
-        <form action="/submit" method="post">
-            <label for="Kurskod">Kurskod:</label>
-            <input type="text" id="coursecode" name="kursKod" required />
-            <br />
-            <label for="Kursnamn">Kursnamn:</label>
-            <input type="text" id="coursename" name="kursNamn" required />
-            <br />
-            <label for="Kursplan">Kursplan:</label>
-            <input type="text" id="syllabus" name="kursPlan" required />
-            <br />
-            <label for="Progression">Progression:</label>
-            <input type="text" id="progression" name="kursProgression" required />
-            <br />
-            <button type="submit">Skicka</button>
-        </form>
+
+        <% if(locals.errors.length> 0) { %>
+            <ul>
+                <% errors.forEach(error=> { %>
+                    <li>
+                        <%= error %>
+                    </li>
+                    <% }); %>
+            </ul>
+            <% } %>
+
+                <form action="/submit" method="post">
+                    <label for="Kurskod">Kurskod:</label>
+                    <input type="text" id="coursecode" name="kursKod" value="<%= coursecode %>" />
+                    <br />
+                    <label for="Kursnamn">Kursnamn:</label>
+                    <input type="text" id="coursename" name="kursNamn" value="<%= coursename %>" required />
+                    <br />
+                    <label for="Kursplan">Kursplan:</label>
+                    <input type="text" id="syllabus" name="kursPlan" value="<%= syllabus %>" required />
+                    <br />
+                    <label for="Progression">Progression:</label>
+                    <input type="text" id="progression" name="kursProgression" value="<%= progression %>" required />
+                    <br />
+                    <button type="submit">Skicka</button>
+                </form>
 
     </main>
 
