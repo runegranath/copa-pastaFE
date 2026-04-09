@@ -22,20 +22,20 @@ client.connect((err) => {
 });
 
 async function createTable() {
-    try {
-        const res = await client.query(`
+  try {
+    const res = await client.query(`
             DROP TABLE IF EXISTS courses;
             CREATE TABLE IF NOT EXISTS courses (
                 id SERIAL PRIMARY KEY,
                 coursecode VARCHAR(10) NOT NULL,
-                coursename VARCHAR(50) NOT NULL,
+                coursename VARCHAR(100) NOT NULL,
                 syllabus TEXT NOT NULL,
-                progression VARCHAR(50) NOT NULL
+                progression VARCHAR(100) NOT NULL
         )`);
-        console.log(res);
-    } catch (err) {
-        console.log(err);
-    } finally {
-        await client.end();
-    }
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    await client.end();
+  }
 }

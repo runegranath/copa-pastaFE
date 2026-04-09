@@ -1,88 +1,88 @@
 body {
-    max-width: 900px;
-    margin: 0 auto;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 1.2em;
-    line-height: 1.7em;
-    padding: 0 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.2em;
+  line-height: 1.7em;
+  padding: 0 20px;
 }
 
 main {
-    margin-top: 20px;
-    border-top: 1px solid #e0e0e0;
+  margin-top: 20px;
+  border-top: 1px solid #e0e0e0;
 }
 
 nav {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    padding: 1em 0;
-    max-width: 600px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 1em 0;
+  max-width: 600px;
 }
 
 h1 {
-    color: #4a4a4a;
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
+  color: #4a4a4a;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
 }
 
 nav a {
-    text-decoration: none;
-    color: #007bff;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.1em;
-        transition: color 0.3s;
+  text-decoration: none;
+  color: #007bff;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.1em;
+  transition: color 0.3s;
 }
 
 nav a:hover {
-    color: #0a1390;
+  color: #0a1390;
 }
 
 .courses-table {
-    width: 100%;
-    border-collapse: collapse; 
-    margin: 20px 0;
-    font-size: 1rem;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1rem;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .courses-table thead tr {
-    background-color: #009879; 
-    color: #ffffff;
-    text-align: left;
-    font-weight: bold;
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
 }
 
 .courses-table th,
 .courses-table td {
-    padding: 12px 15px;
-    border: 1px solid #dddddd;
+  padding: 12px 15px;
+  border: 1px solid #dddddd;
 }
 
 .courses-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+  background-color: #f3f3f3;
 }
 
 .courses-table tbody tr:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 .courses-table button {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .courses-table button:hover {
-    background-color: #cc0000;
+  background-color: #cc0000;
 }
 
 .courses-container {
-    overflow-x: auto; 
+  overflow-x: auto;
 }

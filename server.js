@@ -110,10 +110,10 @@ app.post("/delete/:id", async (req, res) => {
   try {
     // Radera rad med detta ID
     await client.query("DELETE FROM courses WHERE id = $1", [id]);
-    res.redirect("/");
+    res.redirect("/index");
   } catch (error) {
     console.error(error);
-    res.redirect("/");
+    res.redirect("/index");
   }
 });
 
