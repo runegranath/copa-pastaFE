@@ -30,7 +30,8 @@ async function createTable() {
                 coursecode VARCHAR(10) NOT NULL,
                 coursename VARCHAR(100) NOT NULL,
                 syllabus TEXT NOT NULL,
-                progression VARCHAR(100) NOT NULL
+                progression VARCHAR(100) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`);
     console.log(res);
   } catch (err) {

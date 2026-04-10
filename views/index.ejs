@@ -47,7 +47,13 @@
               <td>
                 <form action="/delete/<%= course.id %>" method="post">
                   <button type="submit">Radera</button>
-                </form>
+              </td>
+              <td>
+                <%= new Date(course.created_at).toLocaleDateString('sv-SE') %>
+                  <%= new Date(course.created_at).toLocaleTimeString('sv-SE', { hour: '2-digit' , minute: '2-digit' })
+                    %>
+              </td>
+              </form>
             </tr>
 
             <% }); %>
