@@ -1,14 +1,15 @@
-const { Client } = require("pg");
-require("dotenv").config();
-const express = require("express");
+// Importera nödvändiga moduler
+const { Client } = require("pg");                     // PostgreSQL
+require("dotenv").config();                           // Miljövariabler från .env
+const express = require("express");          
 const app = express();
-app.set("view engine", "ejs"); // View engine: EJS
-app.use(express.static("public")); // Statiska filer i katalog "public"
+app.set("view engine", "ejs");                        // View engine: EJS
+app.use(express.static("public"));                    // Statiska filer i katalog "public"
 
-const bodyParser = require("body-parser"); // Möjlighet att läsa in FORM-data
+const bodyParser = require("body-parser");            // Möjlighet att läsa in FORM-data
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Anslut till databasen
+// Anslut till databasen med miljövariabler för säkerhet
 const client = new Client({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -20,6 +21,7 @@ const client = new Client({
   },
 });
 
+// Försök ansluta till DB
 client.connect((err) => {
   if (err) {
     console.log("Connection error: ", err);
@@ -28,7 +30,7 @@ client.connect((err) => {
   }
 });
 
-// Route till index
+// Route till index, hämtar alla kurser och skickar till index.ejs för rendering
 app.get("/index", async (req, res) => {
   try {
     const result = await client.query("SELECT * FROM courses");
@@ -41,14 +43,14 @@ app.get("/index", async (req, res) => {
 
 // Route till "Lägg till kurs"-sidan
 app.get("/add", async (req, res) => {
-  // Läs post
+    // Läs post
   try {
     // SQL-query
     const result = await client.query("SELECT * FROM courses");
 
     res.render("add", { 
-      errors: [],
-      coursecode: "",
+      errors: [],         // Tom array för felmeddelanden
+      coursecode: "",     // Tomma strängar så formuläret är tomt vid start
       coursename: "",
       syllabus: "",
       progression: ""
@@ -67,12 +69,12 @@ app.post("/submit", async (req, res) => {
 
   let errors = [];
 
-  // Validering: Alla fält måste vara ifyllda != falsy || = eller, annars skicka tillbaka till startsidan
+    // Validering: Alla fält måste vara ifyllda != falsy || = eller, annars skicka tillbaka till startsidan
   if (!coursecode || !coursename || !syllabus || !progression) {
     errors.push("Alla fält måste vara ifyllda");
     }
 
-    // Om fel finns, rendera sidan igen med befintlig data och felmeddelanden
+    // Om fel finns, rendera sidan igen med behålld befintlig data och felmeddelanden
   if (errors.length > 0) {
     return res.render("add", { 
       errors: errors,
@@ -83,19 +85,21 @@ app.post("/submit", async (req, res) => {
     });
   }
 
-  // 3. Om inga fel finns, spara i databasen
+    // Om inga fel finns, spara i databasen
   try {
+    // Använder parametrar för att undvika SQL-injektion
     await client.query(
       "INSERT INTO courses(coursecode, coursename, syllabus, progression) VALUES($1, $2, $3, $4)",
       [coursecode, coursename, syllabus, progression],
     );
     
-    // 4. Skicka användaren tillbaka till index vid lyckad sparning
+    // Skicka användaren tillbaka till index vid lyckad sparning
     res.redirect("/index"); 
 
   } catch (error) {
     console.error(error);
     res.render("add", { 
+    // Rendera generellt felmeddelande och behåll användarens befintliga inmatning
         errors: ["Ett tekniskt fel uppstod i databasen."], 
         coursecode, coursename, syllabus, progression 
     });
@@ -117,12 +121,12 @@ app.post("/delete/:id", async (req, res) => {
   }
 });
 
-// Starta servern
-app.listen(process.env.PORT, () => {
-  console.log(`Server startad på http://localhost:` + process.env.PORT);
-});
-
 // Route till "Om"-sidan
 app.get("/about", (req, res) => {
   res.render("about");
+});
+
+// Starta servern
+app.listen(process.env.PORT, () => {
+  console.log(`Server startad på http://localhost:` + process.env.PORT);
 });

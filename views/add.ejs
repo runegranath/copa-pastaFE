@@ -17,7 +17,7 @@
     <main>
         <h1>Lägg till kurs</h1>
         <div class="form-container">
-
+        <%# Om det finns felmeddelanden loopa ut dessa %>
         <% if(locals.errors.length> 0) { %>
             <ul>
                 <% errors.forEach(error=> { %>

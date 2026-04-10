@@ -1,6 +1,8 @@
+// Importera pg-klienten och dotenv för att läsa miljövariabler
 const { Client } = require("pg");
 require("dotenv").config();
 
+// Skapa en ny pg-klient med konfiguration från .env-filen
 const client = new Client({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -8,19 +10,22 @@ const client = new Client({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // Tillåter anslutning även om certifikatet inte är verifierat
   },
 });
 
+// Försök ansluta till databas
 client.connect((err) => {
   if (err) {
     console.log("Connection error: ", err);
   } else {
     console.log("Connected to the database");
+    // Om anslutningen lyckas, skapa tabellen
     createTable();
   }
 });
 
+// Funktion för att nollställa och skapa tabellen courses
 async function createTable() {
   try {
     const res = await client.query(`
