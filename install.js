@@ -29,7 +29,7 @@ client.connect((err) => {
 async function createTable() {
   try {
     const res = await client.query(`
-            DROP TABLE IF EXISTS courses;
+            /* Skapa tabellen */
             CREATE TABLE IF NOT EXISTS courses (
                 id SERIAL PRIMARY KEY,
                 coursecode VARCHAR(10) NOT NULL,
@@ -42,6 +42,7 @@ async function createTable() {
   } catch (err) {
     console.log(err);
   } finally {
+    // Stäng anslutningen till databasen när scriptet är färdigt eller vid fel
     await client.end();
   }
 }
