@@ -30,6 +30,11 @@ client.connect((err) => {
   }
 });
 
+// Route till startsidan, omdirigerar till index
+app.get("/", (req, res) => {
+  res.redirect("/index");
+});
+
 // Route till index, hämtar alla kurser och skickar till index.ejs för rendering
 app.get("/index", async (req, res) => {
   try {
