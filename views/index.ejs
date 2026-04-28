@@ -2,8 +2,8 @@
 <html lang="sv">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CV</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,7 +11,7 @@
 <body>
   <header>
     <nav>
-      <a href="/index">Startsida</a> - <a href="/add">Lägg till kurs</a> - <a href="about">Om</a>
+      <a href="/index">Startsida</a> - <a href="/add">Lägg till kurs</a> - <a href="/about">Om</a>
     </nav>
   </header>
 
@@ -26,38 +26,30 @@
             <th>Kursnamn</th>
             <th>Kursplan</th>
             <th>Progression</th>
-            <th></th><th></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
-        <%# Rendera listan över kurser och loopa ut %>
         <tbody class="courses-list">
-          <% courses.forEach(course=> {
-            %>
+          <% courses.forEach(course=> { %>
             <tr>
-              <td>
-                <%= course.coursecode %>
-              </td>
-              <td>
-                <%= course.coursename %>
-              </td>
+              <td><%= course.coursecode %></td>
+              <td><%= course.coursename %></td>
               <td>
                 <a href="<%= course.syllabus %>" target="_blank">Länk</a>
               </td>
+              <td><%= course.progression %></td>
               <td>
-                <%= course.progression %>
+                <%= new Date(course.created_at).toLocaleDateString('sv-SE') %>
+                <%= new Date(course.created_at).toLocaleTimeString('sv-SE', { hour: '2-digit' , minute: '2-digit' }) %>
               </td>
               <td>
                 <form action="/delete/<%= course.id %>" method="post">
-                  <button type="submit">Radera</button>
-              </td>
-              <td>
-                <%= new Date(course.created_at).toLocaleDateString('sv-SE') %>
-                  <%= new Date(course.created_at).toLocaleTimeString('sv-SE', { hour: '2-digit' , minute: '2-digit' })
-                    %>
-              </td>
-              </form>
-            </tr>
 
+              <button type="submit">Radera</button>
+                </form>
+              </td>
+            </tr>
             <% }); %>
         </tbody>
       </table>
@@ -67,7 +59,6 @@
   <footer>
     <p> Lab 1 serverbaserad webbutveckling av Rune Granath</p>
   </footer>
-
 
 </body>
 
