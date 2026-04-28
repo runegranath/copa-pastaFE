@@ -1,1 +1,2 @@
 Denna webbapplikation är byggd med Node.js, Express och EJS som låter användaren visa, lägga till och radera kurser i en databas. Projektet fokuserar på serverbaserad utveckling och använder PostgreSQL för persistent datalagring via en molnbaserad instans på Render. Genom applikationen hanteras dynamisk rendering av data, formulärvalidering och säker kommunikation med databasen med hjälp av miljövariabler.
+ER-diagram för databasen finns i views. 
