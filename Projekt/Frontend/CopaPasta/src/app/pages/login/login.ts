@@ -1,9 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {}
+export class Login {
+  email: string = '';
+  password: string = '';
+
+  message = signal('');
+
+  authService = inject(AuthService);
+
+  // Inloggning
+  login(): void {
+    const user: User = {
+      email: this.email,
+      password: this.password,
+      created: new Date(),
+    };
+
+    this.authService.login(user).subscribe({
+      next: () => this.message.set('Lyckad inloggning'),
+      error: () => this.message.set('Felaktig epost/lösenord!'),
+    });
+  }
+}

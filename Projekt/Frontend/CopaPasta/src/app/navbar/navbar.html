@@ -1,11 +1,16 @@
 <nav>
-  <div class="container">
-    <ul>
-      <li><a routerLink="/">Hem</a></li>
-      <li><a routerLink="/menu">Meny</a></li>
-      <li><a routerLink="/add-menu">Lägg till meny</a></li>
-      <li><a routerLink="/register">Registera</a></li>
-      <li><a routerLink="/login">Login</a></li>
-    </ul>
-  </div>
+    <div class="container">
+        <ul>
+            <li><a routerLink="/">Hem</a></li>
+            <li><a routerLink="/menu">Meny</a></li>
+            @if(authService.isLoggedIn()) {
+            <li><a routerLink="/add-menu">Lägg till meny</a></li>
+            <li><a (click)="logout()">Logga ut</a></li>
+            } @else {
+            <li><a routerLink="/register">Registera</a></li>
+            <li><a routerLink="/login">Login</a></li>
+            }
+
+        </ul>
+    </div>
 </nav>

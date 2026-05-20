@@ -1,1 +1,9 @@
-<p>menus works!</p>
+<h2>Menyer</h2>
+
+<section id="menu-list">
+    @for(menu of menus(); track menu.id) {
+        <div class="menu-item">
+            <h3>{{ menu.year }} - Vecka {{ menu.week_number }}</h3>
+        </div>
+    }
+</section>

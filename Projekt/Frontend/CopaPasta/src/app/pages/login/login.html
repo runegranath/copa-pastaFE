@@ -1,1 +1,15 @@
-<p>login works!</p>
+<h2>Inloggning</h2>>
+
+<form (ngSubmit)="login()">
+    <div class="error-message">
+        {{ message() }}
+    </div>
+    <label for="email">E-post:</label>
+    <input type="text" id="email" name="email" [(ngModel)]="email">
+
+    <label for="password">Lösenord:</label>
+    <input type="password" id="password" name="password" [(ngModel)]="password" required>
+
+    <button type="submit">Logga in</button>
+</form>
+// vidareutveckling validering 

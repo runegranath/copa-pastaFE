@@ -1,1 +1,3 @@
-export interface RegisterResponse {}
+export interface RegisterResponse {
+    message: string;
+}

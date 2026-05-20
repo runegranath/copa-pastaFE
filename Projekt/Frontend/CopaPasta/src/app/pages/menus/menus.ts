@@ -6,4 +6,8 @@ import { Component } from '@angular/core';
   templateUrl: './menus.html',
   styleUrl: './menus.css',
 })
-export class Menus {}
+export class Menus {
+  menuService = inject(MenuService);
+
+  menus = this.menuService.getMenus();
+}
