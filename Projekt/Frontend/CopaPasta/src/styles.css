@@ -50,7 +50,7 @@ select:focus {
 
 button,
 input[type="submit"] {
-    background: #4f46e5;
+    background: #1b304f;
     color: white;
     border: none;
     padding: 0.9rem 1rem;
@@ -63,7 +63,7 @@ input[type="submit"] {
 
 button:hover,
 input[type="submit"]:hover {
-    background: #4338ca;
+    background: #284775;
 }
 
 button:active,

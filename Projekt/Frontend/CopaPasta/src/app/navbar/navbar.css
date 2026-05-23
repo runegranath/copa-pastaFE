@@ -4,17 +4,15 @@
 }
 
 nav {
-    background-color: black;
+    background-color: #1b304f;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-nav ul li {
-    display: inline-block;
+    display: flex;
+    align-items: center;
 }
 
 nav ul li a {
@@ -25,12 +23,22 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #333;
+    background-color: #b28e34;
 }
 
 .active {
   color: #fff;
-  background-color: #007bff;
+  background-color: #cca43b;
   font-weight: bold;
   border-bottom: 2px solid white;
+}
+
+.logo img {
+  height: 75px;                  
+  width: auto;    
+  border: 1px solid #cca43b;               
+}
+
+nav ul li a.logo:hover {
+  background-color: #1b304f;
 }

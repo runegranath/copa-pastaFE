@@ -1,7 +1,8 @@
 <nav>
     <div class="container">
         <ul>
-            <li><a routerLink="/" routerLinkActive="active">Hem</a></li>
+            <li><a routerLink="/" class="logo"><img src="/Copa_pasta.png" alt="Copa Pasta Logo"></a></li>
+            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Hem</a></li>
             <li><a routerLink="/menus" routerLinkActive="active">Meny</a></li>
             @if(authService.isLoggedIn()) {
             <li><a routerLink="/add-menu" routerLinkActive="active">Lägg till meny</a></li>
