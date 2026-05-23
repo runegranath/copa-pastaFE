@@ -26,7 +26,11 @@ export class Login {
     };
 
     this.authService.login(user).subscribe({
-      next: () => this.message.set('Lyckad inloggning'),
+      next: () => {
+        this.message.set('Lyckad inloggning');
+        this.email = '';
+        this.password = '';
+        },
       error: () => this.message.set('Felaktig epost/lösenord!'),
     });
   }

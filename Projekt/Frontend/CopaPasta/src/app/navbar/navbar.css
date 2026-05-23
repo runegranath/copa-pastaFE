@@ -27,3 +27,10 @@ nav ul li a {
 nav ul li a:hover {
     background-color: #333;
 }
+
+.active {
+  color: #fff;
+  background-color: #007bff;
+  font-weight: bold;
+  border-bottom: 2px solid white;
+}
