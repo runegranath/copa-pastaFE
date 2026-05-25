@@ -42,3 +42,23 @@ nav ul li a:hover {
 nav ul li a.logo:hover {
   background-color: #1b304f;
 }
+
+.logout {
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;              
+  }
+  nav li {
+    width: 100%;
+    text-align: center;
+  }
+  .active {
+    border-bottom: none;
+  }
+}

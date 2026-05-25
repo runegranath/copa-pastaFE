@@ -1,15 +1,41 @@
-<h2>Lagra Menyer</h2>>
+<h2>Lagra Menyer</h2>
 
 <form (ngSubmit)="addMenu()">
     <div class="error-message">
         {{ message() }}
     </div>
-    <label for="year">År</label>
-    <input type="text" id="year" name="year" [(ngModel)]="year">
 
-    <label for="week">Veckonr:</label>
-    <input type="text" id="week" name="week" [(ngModel)]="week_number">
+    <h3>Menyinfo</h3>
+
+    <fieldset class="dish-group">
+        <legend>Menydatum</legend>
+        <label for="year">År</label>
+        <input type="text" id="year" name="year" [(ngModel)]="year">
+
+        <label for="week">Veckonr:</label>
+        <input type="text" id="week" name="week" [(ngModel)]="week_number">
+    </fieldset>
+
+    <h3>Maträtter</h3>
+
+    @for (dish of dishes; track dish.day_of_week) {
+
+    <fieldset class="dish-group">
+        <legend>{{ dish.day_of_week }}</legend>
+
+        <label for="title-{{$index}}">Rättens namn:</label>
+        <input type="text" id="title-{{$index}}" name="title-{{$index}}" [(ngModel)]="dish.title"
+            placeholder="t.ex. Pasta Alfredo">
+
+        <label for="desc-{{$index}}">Beskrivning:</label>
+        <textarea id="desc-{{$index}}" name="desc-{{$index}}" [(ngModel)]="dish.description"
+            placeholder="t.ex. ingredienser / Innehåller laktos, gluten"></textarea>
+
+        <label for="price-{{$index}}">Pris (kr):</label>
+        <input type="number" id="price-{{$index}}" name="price-{{$index}}" [(ngModel)]="dish.price">
+    </fieldset>
+    }
 
     <button type="submit">Lagra meny</button>
 </form>
-// vidareutveckling validering 
+// vidareutveckling validering

@@ -10,7 +10,7 @@ import { MenuResponse } from '../models/menu-response';
 })
 export class MenuService {
   private http = inject(HttpClient);
-  url : string = "http://localhost:3000/menu";
+  url : string = "http://localhost:3000/api/addmenu";
 
   getMenus() : Signal<Menu[]> {
     const menus$ = this.http.get<Menu[]>(this.url); // Hämta menyer som Observable $ för att indikera att det är en signal

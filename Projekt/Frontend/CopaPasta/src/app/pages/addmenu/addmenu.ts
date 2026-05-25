@@ -39,7 +39,7 @@ export class Addmenu {
       year: Number(this.year),
       week_number: Number(this.week_number),
       is_published: Number(this.is_published),
-      dishes: this.dishes, //
+      dishes: this.dishes, 
     };
 
     this.menuService.addMenu(newMenu).subscribe({

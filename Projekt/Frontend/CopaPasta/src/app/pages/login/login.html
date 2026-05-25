@@ -1,9 +1,20 @@
 <h2>Inloggning</h2>
 
 <form (ngSubmit)="login()">
+
+    <!-- Visa fel- eller framgångsmeddelanden -->
+    @if (errorMessage()) {
     <div class="error-message">
-        {{ message() }}
+        {{ errorMessage() }}
     </div>
+    }
+
+    @if (successMessage()) {
+    <div class="success-message">
+        {{ successMessage() }}
+    </div>
+    }
+
     <label for="email">E-post:</label>
     <input type="text" id="email" name="email" [(ngModel)]="email">
 
@@ -12,4 +23,4 @@
 
     <button type="submit">Logga in</button>
 </form>
-// vidareutveckling validering 
+<!-- vidareutveckling validering -->

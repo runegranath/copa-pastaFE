@@ -13,12 +13,17 @@ export class Login {
   email: string = '';
   password: string = '';
 
-  message = signal('');
+  errorMessage = signal('');
+  successMessage = signal('');
 
   authService = inject(AuthService);
 
   // Inloggning
   login(): void {
+    // nollställ tidigare meddelanden
+    this.errorMessage.set('');
+    this.successMessage.set('');
+
     const user: User = {
       email: this.email,
       password: this.password,
@@ -27,11 +32,11 @@ export class Login {
 
     this.authService.login(user).subscribe({
       next: () => {
-        this.message.set('Lyckad inloggning');
+        this.successMessage.set('Lyckad inloggning');
         this.email = '';
         this.password = '';
-        },
-      error: () => this.message.set('Felaktig epost/lösenord!'),
+      },
+      error: () => this.errorMessage.set('Felaktig epost/lösenord!'),
     });
   }
 }
