@@ -1,116 +1,128 @@
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
 
 body {
-    font-family: 'Google Sans', sans-serif;
-    margin: 0;
-    padding: 0;
+  font-family: 'Google Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f3;
 }
 
 .container {
-    max-width: 960px;
-    margin: 0 auto;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 /** Formulär **/
 form {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 label {
-    display: block;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #475569;
-    margin-bottom: 0.3rem;
-    margin-top: 1rem;
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.3rem;
+  margin-top: 1rem;
 }
 
 input,
 textarea,
 select {
-    font-size: 1rem;
-    font-family: inherit;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    outline: none;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
-    display: block;
-    width: 100%;
-    padding: 0.65rem;
+  font-size: 1rem;
+  font-family: inherit;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  display: block;
+  width: 100%;
+  padding: 0.65rem;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #cca43b;
-    box-shadow: 0 0 0 3px rgba(204, 164, 59, 0.15);
+  border-color: #cca43b;
+  box-shadow: 0 0 0 3px rgba(204, 164, 59, 0.15);
 }
 
 button,
-input[type="submit"] {
-    background: #1b304f;
-    color: white;
-    border: none;
-    padding: 0.9rem 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
+input[type='submit'] {
+  background: #1b304f;
+  color: white;
+  border: none;
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
 }
 
 button:hover,
-input[type="submit"]:hover {
-    background: #3B5973;
+input[type='submit']:hover {
+  background: #3b5973;
 }
 
 button:active,
-input[type="submit"]:active {
-    transform: scale(0.98);
+input[type='submit']:active {
+  transform: scale(0.98);
 }
 
 button:disabled,
-input[type="submit"]:disabled {
-    background: #aaa;
-    cursor: not-allowed;
+input[type='submit']:disabled {
+  background: #aaa;
+  cursor: not-allowed;
 }
 
 small,
 .error-message {
-    color: #dc2626;
-    font-size: 0.875rem;
+  color: #dc2626;
+  font-size: 0.875rem;
 }
 
 .success-message {
-    color: #16a34a;
-    font-size: 0.875rem;
+  color: #16a34a;
+  font-size: 0.875rem;
 }
 
 article {
-    padding: 0.8rem 1rem;
-    border: 1px solid #dcdcdc;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 .dish-group {
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .dish-group legend {
-    font-weight: bold;
-    color: #3b5973;
-    padding: 0 0.5rem;
+  font-weight: bold;
+  color: #3b5973;
+  padding: 0 0.5rem;
 }

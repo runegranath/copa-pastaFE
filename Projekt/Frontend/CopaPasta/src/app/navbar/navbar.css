@@ -18,7 +18,7 @@ nav ul {
 nav ul li a {
     display: block;
     padding: 1em;
-    color: white;
+    color: #F5F5F3;
     text-decoration: none;
 }
 
@@ -30,13 +30,13 @@ nav ul li a:hover {
   color: #fff;
   background-color: #cca43b;
   font-weight: bold;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid #F5F5F3;
 }
 
 .logo img {
   height: 75px;                  
   width: auto;    
-  border: 1px solid #cca43b;               
+  border: 1px solid #cca43b;         
 }
 
 nav ul li a.logo:hover {

@@ -18,7 +18,6 @@ export class Addmenu {
   // Förifyllda värden 
   year: number = 2026; 
   week_number!: number; // Detta får ett värde från användarinput senare
-  is_published: number = 0;
 
   // Mall för veckans dagar så behöriga kan fylla i mat direkt
   dishes = [
@@ -35,11 +34,18 @@ export class Addmenu {
       return;
     }
 
+    // filtrera bort dagar där ingen maträtt har fyllts i för t.ex. röda dagar
+    const filledDishes = this.dishes.filter(dish => dish.title.trim() !== '');
+
+    if (filledDishes.length === 0) {
+      this.message.set('Du måste fylla i minst en maträtt för veckan!');
+      return;
+    }
+
     const newMenu: Menu = {
       year: Number(this.year),
       week_number: Number(this.week_number),
-      is_published: Number(this.is_published),
-      dishes: this.dishes, 
+      dishes: filledDishes, 
     };
 
     this.menuService.addMenu(newMenu).subscribe({

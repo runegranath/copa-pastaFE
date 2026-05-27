@@ -1,9 +1,22 @@
 <h2>Menyer</h2>
 
 <section id="menu-list">
-    @for(menu of menus(); track menu.id) {
+   @for(dish of menus(); track dish.title) {
         <div class="menu-item">
-            <h3>{{ menu.year }} - Vecka {{ menu.week_number }}</h3>
+            <h3>{{ dish.day_of_week }}</h3>
+            
+            <p>
+                <strong>{{ dish.title }}</strong>
+                @if(dish.price) {
+                    <span class="price"> - {{ dish.price }} kr</span>
+                }
+            </p>
+            
+            @if(dish.description) {
+                <p class="description">{{ dish.description }}</p>
+            }
         </div>
+    } @empty {
+        <p>Det finns ingen meny inlagd för denna vecka ännu.</p>
     }
 </section>

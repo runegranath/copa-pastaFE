@@ -4,27 +4,29 @@ import { Menu } from '../models/menu';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { MenuResponse } from '../models/menu-response';
+import { Dish } from '../models/dish';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuService {
   private http = inject(HttpClient);
-  url : string = "http://localhost:3000/api/addmenu";
+  private getUrl: string = 'http://localhost:3000/api/menus'; // getrutt
+  private addUrl: string = 'http://localhost:3000/api/addmenu'; // postrutt
 
-  getMenus() : Signal<Menu[]> {
-    const menus$ = this.http.get<Menu[]>(this.url); // Hämta menyer som Observable $ för att indikera att det är en signal
-    return toSignal(menus$, { initialValue: [] });  // Konvertera Observable till Signal, börja med tom array
+  getMenus(weekNumber: number): Observable<Dish[]> {
+     
+    return this.http.get<Dish[]>(`${this.getUrl}?week_number=${weekNumber}`); // // Hämta rätter som Observable $ för att indikera att det är en signal och skicka med weekNumber som query-parameter
   }
 
-  addMenu(menu: Menu) : Observable<MenuResponse> {
-    const token = localStorage.getItem("token");
+  addMenu(menu: Menu): Observable<MenuResponse> {
+    const token = localStorage.getItem('token');
 
     // Skapa en header
     const headers = {
-      'authorization' : `Bearer ${token}`
+      authorization: `Bearer ${token}`,
     };
 
-    return this.http.post<MenuResponse>(this.url, menu, { headers });
+    return this.http.post<MenuResponse>(this.addUrl, menu, { headers });
   }
 }
