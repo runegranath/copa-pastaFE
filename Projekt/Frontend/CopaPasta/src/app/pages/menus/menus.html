@@ -3,6 +3,7 @@
 <section id="menu-list">
    @for(dish of menus(); track dish.title) {
         <div class="menu-item">
+            <h2>Meny för vecka {{ selectedWeek() }}</h2>
             <h3>{{ dish.day_of_week }}</h3>
             
             <p>
