@@ -30,12 +30,33 @@ export class Menus {
     { initialValue: [] },
   );
 
+  // Slå om till vecka 1 om räknaren går över 53 och öka året
   nextWeek() {
-    this.selectedWeek.update((w) => w + 1);
+    this.selectedWeek.update((w) => {
+      const currentWeek = Number(w);
+
+  
+      if (currentWeek >= 53) {
+        this.selectedYear.update((y) => y + 1);
+        return 1; // börja om på v1
+      }
+
+      return currentWeek + 1;
+    });
   }
 
   prevWeek() {
-    this.selectedWeek.update((w) => w - 1);
+    this.selectedWeek.update((w) => {
+      const currentWeek = Number(w);
+
+     
+      if (currentWeek <= 1) {
+        this.selectedYear.update((y) => y - 1);
+        return 52; 
+      }
+
+      return currentWeek - 1;
+    });
   }
 
   // metod för att räkna ut det aktuella veckonumret enligt ISO-8601
