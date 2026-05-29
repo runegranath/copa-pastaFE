@@ -1,23 +1,36 @@
-<h2>Menyer</h2>
-
 <section id="menu-list">
-   @for(dish of menus(); track dish.title) {
-        <div class="menu-item">
-            <h2>Meny för vecka {{ selectedWeek() }}</h2>
-            <h3>{{ dish.day_of_week }}</h3>
-            
-            <p>
-                <strong>{{ dish.title }}</strong>
-                @if(dish.price) {
-                    <span class="price"> - {{ dish.price }} kr</span>
-                }
-            </p>
-            
-            @if(dish.description) {
-                <p class="description">{{ dish.description }}</p>
-            }
+
+    <div class="nav-bar">
+        <button class="nav-arrow" (click)="prevWeek()">
+            ‹ Vecka {{ selectedWeek() - 1 }}
+        </button>
+
+        <div class="current-week-title">
+            <h2>VECKA {{ selectedWeek() }}</h2>
         </div>
-    } @empty {
-        <p>Det finns ingen meny inlagd för denna vecka ännu.</p>
-    }
+
+        <button class="nav-arrow" (click)="nextWeek()">
+            Vecka {{ selectedWeek() + 1 }} ›
+        </button>
+    </div>
+
+    <div class="menu-item">
+        @for (dish of menus(); track dish.day_of_week) {
+        <div class="dish-card">
+            <span class="day-marker">
+                <h3>{{ dish.day_of_week }}</h3>
+            </span>
+
+            <div class="dish-header">
+                <strong>{{ dish.title }}</strong>
+                <span class="dish-price">{{ dish.price }} kr</span>
+            </div>
+
+            <p class="dish-description">{{ dish.description }}</p>
+        </div>
+        } @empty {
+        <p class="no-menu">Ingen meny än för vecka {{ selectedWeek() }}.</p>
+        }
+    </div>
+
 </section>

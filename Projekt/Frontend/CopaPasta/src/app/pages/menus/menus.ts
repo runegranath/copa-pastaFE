@@ -1,37 +1,44 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-menus',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './menus.html',
   styleUrl: './menus.css',
 })
 export class Menus {
   menuService = inject(MenuService);
 
+  // håller koll på veckonummer som användare väljer och startar på aktuell vecka
   selectedWeek = signal<number>(this.getCurrentWeekNumber());
+  selectedYear = signal<number>(new Date().getFullYear());
 
-  // Varje gång selectedWeek ändras skapas en ny Observable som hämtar menyerna för den veckan
-  private menusObservable$ = computed(() => {
-    return this.menuService.getMenus(this.selectedWeek());
-  });
+  private weekYear$ = toObservable(
+    computed(() => ({
+      week: this.selectedWeek(),
+      year: this.selectedYear(),
+    })),
+  );
 
+  // konvertera den senaste Observable till en signal som komponenten kan använda som innehåller rätter för vald vecka
   menus = toSignal(
-    this.menusObservable$(), 
-    { initialValue: [] }
+    this.weekYear$.pipe(switchMap(({ week, year }) => this.menuService.getMenus(week, year))),
+    { initialValue: [] },
   );
 
   nextWeek() {
-    this.selectedWeek.update(w => w + 1);
+    this.selectedWeek.update((w) => w + 1);
   }
 
   prevWeek() {
-    this.selectedWeek.update(w => w - 1);
+    this.selectedWeek.update((w) => w - 1);
   }
 
-  // Funktion för att räkna ut det aktuella veckonumret enligt ISO-8601
+  // metod för att räkna ut det aktuella veckonumret enligt ISO-8601
   private getCurrentWeekNumber(): number {
     const today = new Date();
     const target = new Date(today.valueOf());
@@ -39,12 +46,12 @@ export class Menus {
 
     target.setDate(target.getDate() - dayNr + 3); // sätter datumet till torsdagen i samma vecka
     const firstThursday = target.valueOf();
-    
+
     target.setMonth(0, 1); // gå till 1:a januari
     if (target.getDay() !== 4) {
       target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7)); // hitta första torsdagen i januari
     }
-    
+
     // Räkna ut antalet veckor mellan de två torsdagarna
     return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000);
   }

@@ -1,0 +1,82 @@
+.menu-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-item {
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1b304f;
+  color: #ffffff;
+  padding: 10px;
+  gap: 30px;
+}
+
+.current-week-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  border-bottom: 3px solid #cca43b;
+  padding-bottom: 5px;
+}
+
+.nav-arrow {
+  color: #a0aab5;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.nav-arrow:hover {
+  color: #ffffff;
+}
+
+.dish-card {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border-left: 4px solid #2c3238;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.day-marker {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #54843b;
+  margin-bottom: 5px;
+}
+
+.dish-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dish-price {
+  font-weight: bold;
+  color: #444;
+}
+
+.dish-description {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.no-menu {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 40px;
+}

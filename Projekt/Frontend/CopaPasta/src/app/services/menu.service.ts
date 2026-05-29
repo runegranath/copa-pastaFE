@@ -13,9 +13,9 @@ export class MenuService {
   private getUrl: string = 'http://localhost:3000/api/menus'; // getrutt
   private addUrl: string = 'http://localhost:3000/api/addmenu'; // postrutt
 
-  getMenus(weekNumber: number): Observable<Dish[]> {
+  getMenus(weekNumber: number, year: number): Observable<Dish[]> {
      
-    return this.http.get<Dish[]>(`${this.getUrl}?week_number=${weekNumber}`); // Hämtar veckans meny som en Observable och skickar med veckonummer som query-parameter
+    return this.http.get<Dish[]>(`${this.getUrl}?week_number=${weekNumber}&year=${year}`); // Hämtar veckans meny som en Observable och skickar med veckonummer som query-parameter
   }
 
   addMenu(menu: Menu): Observable<MenuResponse> {
