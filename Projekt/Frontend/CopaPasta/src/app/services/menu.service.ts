@@ -10,8 +10,9 @@ import { Dish } from '../models/dish';
 })
 export class MenuService {
   private http = inject(HttpClient);
-  private getUrl: string = 'http://localhost:3000/api/menus'; // getrutt
-  private addUrl: string = 'http://localhost:3000/api/addmenu'; // postrutt
+  private getUrl: string = 'http://localhost:3000/api/menus'; // getrutt för meny
+  private addUrl: string = 'http://localhost:3000/api/addmenu'; // postrutt för meny
+  private orderUrl = 'http://localhost:3000/api/orders'; // orders-rutten
 
   getMenus(weekNumber: number, year: number): Observable<Dish[]> {
      
@@ -27,5 +28,9 @@ export class MenuService {
     };
 
     return this.http.post<MenuResponse>(this.addUrl, menu, { headers });
+  }
+
+  createOrder(orderData: any): Observable<any> {
+    return this.http.post(this.orderUrl, orderData);
   }
 }

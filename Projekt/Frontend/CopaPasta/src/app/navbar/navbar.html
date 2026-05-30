@@ -1,14 +1,15 @@
 <nav>
     <div class="container">
+        <a routerLink="/" class="logo"><img src="/Copa_pasta.png" alt="Copa Pasta Logo"></a>
         <ul>
-            <li><a routerLink="/" class="logo"><img src="/Copa_pasta.png" alt="Copa Pasta Logo"></a></li>
             <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Hem</a></li>
+            <!--exact för att markera som aktiv endast på huvudsidan -->
             <li><a routerLink="/menus" routerLinkActive="active">Meny</a></li>
             @if(authService.isLoggedIn()) {
             <li><a routerLink="/addmenu" routerLinkActive="active">Lägg till meny</a></li>
+            <li><a routerLink="/register" routerLinkActive="active">Registera</a></li>
             <li><a (click)="logout()" class="logout">Logga ut</a></li>
             } @else {
-            <li><a routerLink="/register" routerLinkActive="active">Registera</a></li>
             <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
             }
 

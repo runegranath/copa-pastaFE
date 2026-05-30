@@ -1,17 +1,21 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, inject, signal } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-menus',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './menus.html',
   styleUrl: './menus.css',
 })
 export class Menus {
   menuService = inject(MenuService);
+  private cdr = inject(ChangeDetectorRef);
+  private snackBar = inject(MatSnackBar);
 
   // håller koll på veckonummer som användare väljer och startar på aktuell vecka
   selectedWeek = signal<number>(this.getCurrentWeekNumber());
@@ -30,12 +34,77 @@ export class Menus {
     { initialValue: [] },
   );
 
+  // Håller koll på vilken rätt som rä vald i gränssnittet, null om ingen är vald
+  activeDishId: number | null = null;
+
+  // formulärdataobjekt
+  orderData = {
+    customer_name: '',
+    customer_phone: '',
+    pickup_time: '',
+    quantity: 1,
+  };
+
+  // Metod för att öppna/stänga beställningsformuläret för en specifik rätt 
+  toggleOrderForm(dishId: number) {
+    if (this.activeDishId === dishId) {
+      this.activeDishId = null; // Stäng om man klickar på samma igen
+    } else {
+      this.activeDishId = dishId; // Öppna för denna maträtt
+      this.resetOrderForm(); // Nollställ fälten så gamla uppgifter försvinner
+    }
+  }
+
+  // Metod för att skicka beställningen till backend
+  submitOrder(dishId: number) {
+    // Slå ihop dishId med resten av formulärdatan till ett orderobjekt
+    const completeOrder = {
+      dish_id: dishId,
+      ...this.orderData,
+    };
+
+    this.menuService.createOrder(completeOrder).subscribe({
+      next: (res) => {
+        console.log(res);
+
+        // Stäng formuläret och nollställ det
+        this.activeDishId = null;
+        this.resetOrderForm();
+        
+        // märker att det skett förändringar så snackbaren kan visas
+        this.cdr.detectChanges();
+
+        this.snackBar.open('Tack! Din förbeställning är mottagen. 🍴', 'Stäng', {
+          duration: 4000,
+          verticalPosition: 'top',
+        });
+      },
+
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open('Något gick fel. Kunde inte skicka beställningen. ❌', 'Stäng', {
+          duration: 5000,
+          verticalPosition: 'top',
+        });
+      },
+    });
+  }
+
+  // Rensa formuläret
+  resetOrderForm() {
+    this.orderData = {
+      customer_name: '',
+      customer_phone: '',
+      pickup_time: '',
+      quantity: 1,
+    };
+  }
+
   // Slå om till vecka 1 om räknaren går över 53 och öka året
   nextWeek() {
     this.selectedWeek.update((w) => {
       const currentWeek = Number(w);
 
-  
       if (currentWeek >= 53) {
         this.selectedYear.update((y) => y + 1);
         return 1; // börja om på v1
@@ -49,10 +118,9 @@ export class Menus {
     this.selectedWeek.update((w) => {
       const currentWeek = Number(w);
 
-     
       if (currentWeek <= 1) {
         this.selectedYear.update((y) => y - 1);
-        return 52; 
+        return 52;
       }
 
       return currentWeek - 1;

@@ -27,6 +27,41 @@
             </div>
 
             <p class="dish-description">{{ dish.description }}</p>
+
+            <button class="btn-order-toggle" (click)="toggleOrderForm(dish.id!)"> <!-- vi lovar att ett id kommer att finnas här med ! -->
+                {{ activeDishId === dish.id ? 'Stäng' : 'Förbeställ TakeAway' }}
+            </button>
+
+            @if (activeDishId === dish.id) {
+            <div class="order-form-container">
+                <form #myForm="ngForm" (ngSubmit)="submitOrder(dish.id!)">
+                    
+                    <div class="form-group">
+                        <label>Namn:</label>
+                        <input type="text" name="customer_name" [(ngModel)]="orderData.customer_name" required placeholder="Ditt namn">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Telefonnummer:</label>
+                        <input type="tel" name="customer_phone" [(ngModel)]="orderData.customer_phone" required placeholder="Ditt telefonnummer">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upphämtningstid:</label>
+                        <input type="time" name="pickup_time" [(ngModel)]="orderData.pickup_time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Antal portioner:</label>
+                        <input type="number" name="quantity" [(ngModel)]="orderData.quantity" min="1" required>
+                    </div>
+
+                    <button type="submit" [disabled]="myForm.invalid" class="btn-submit-order">
+                        Skicka beställning
+                    </button>
+                </form>
+            </div>
+            }
         </div>
         } @empty {
         <p class="no-menu">Ingen meny än för vecka {{ selectedWeek() }}.</p>
