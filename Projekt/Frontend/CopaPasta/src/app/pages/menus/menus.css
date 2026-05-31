@@ -74,9 +74,37 @@
   font-style: italic;
 }
 
+.dish-right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+  gap: 8px;              
+}
+
 .no-menu {
   text-align: center;
   color: #999;
   font-style: italic;
   padding: 40px;
 }
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.btn-order-toggle {
+  display: flex;
+  text-align: center;
+  gap: 8px;
+  background-color: #5b491b;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+
