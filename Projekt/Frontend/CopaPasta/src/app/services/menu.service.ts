@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, Signal } from '@angular/core';
+import { inject, Injectable, signal, Signal } from '@angular/core';
 import { Menu } from '../models/menu';
 import { Observable } from 'rxjs';
 import { MenuResponse } from '../models/menu-response';
@@ -33,4 +33,13 @@ export class MenuService {
   createOrder(orderData: any): Observable<any> {
     return this.http.post(this.orderUrl, orderData);
   }
+
+  getAllOrders(): Observable<any[]> {
+  const token = localStorage.getItem('token');
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+  return this.http.get<any[]>('http://localhost:3000/api/orders', { headers });
+}
+
 }

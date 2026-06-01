@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
+import { Dish } from '../../models/dish';
 
 @Component({
   selector: 'app-menus',
@@ -45,7 +46,7 @@ export class Menus {
     quantity: 1,
   };
 
-  // Metod för att öppna/stänga beställningsformuläret för en specifik rätt 
+  // Metod för att öppna/stänga beställningsformuläret för en specifik rätt
   toggleOrderForm(dishId: number) {
     if (this.activeDishId === dishId) {
       this.activeDishId = null; // Stäng om man klickar på samma igen
@@ -56,28 +57,35 @@ export class Menus {
   }
 
   // Metod för att skicka beställningen till backend
-  submitOrder(dishId: number) {
+  submitOrder(dish: Dish) {
     // Slå ihop dishId med resten av formulärdatan till ett orderobjekt
     const completeOrder = {
-      dish_id: dishId,
+      dish_id: dish.id,
       ...this.orderData,
     };
 
+    // submittedPickupTime = signal<string | null>(null);
+
+    // Skicka beställningen till backend
     this.menuService.createOrder(completeOrder).subscribe({
       next: (res) => {
         console.log(res);
 
         // Stäng formuläret och nollställ det
         this.activeDishId = null;
-        this.resetOrderForm();
-        
+
         // märker att det skett förändringar så snackbaren kan visas
         this.cdr.detectChanges();
 
-        this.snackBar.open('Tack! Din förbeställning är mottagen. 🍴', 'Stäng', {
-          duration: 4000,
-          verticalPosition: 'top',
-        });
+        this.snackBar.open(
+          `Tack! Din förbeställning är mottagen till klockan ${this.orderData.pickup_time} 🍴`,
+          'Stäng',
+          {
+            duration: 5000,
+            verticalPosition: 'top',
+          },
+        );
+        this.resetOrderForm();
       },
 
       error: (err) => {

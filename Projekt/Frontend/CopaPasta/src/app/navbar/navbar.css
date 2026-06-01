@@ -62,21 +62,21 @@ nav ul li a.logo:hover {
 @media (max-width: 768px) {
   .container {
     padding: 15px 20px;
-    flex-direction: column; 
+    flex-direction: column;
     gap: 20px;
   }
 
   nav .logo {
-    margin-right: 0; 
+    margin-right: 0;
     display: block;
     text-align: center;
     width: 100%;
   }
 
   .logo img {
-    height: auto;        
-    width: 100%;         
-    max-width: 150px;    
+    height: auto;
+    width: 100%;
+    max-width: 150px;
   }
 
   nav ul {
@@ -84,10 +84,12 @@ nav ul li a.logo:hover {
     flex-direction: column;
     gap: 10px;
   }
+
   nav li {
     width: 100%;
     text-align: center;
   }
+  
   .active {
     border-bottom: none;
   }

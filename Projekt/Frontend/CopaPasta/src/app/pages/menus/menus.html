@@ -26,8 +26,8 @@
                 <div class="dish-right-side">
                     <span class="dish-price">{{ dish.price }} kr</span>
 
+                    <!-- knappen som tar fram beställningsformuläret, vi lovar att ett id finns med !-->
                     <button class="btn-order-toggle" (click)="toggleOrderForm(dish.id!)">
-                        <!-- vi lovar att ett id kommer att finnas här med ! -->
                         {{ activeDishId === dish.id ? 'Stäng' : 'Förbeställ TakeAway' }}
                     </button>
                 </div>
@@ -36,10 +36,10 @@
             <p class="dish-description">{{ dish.description }}</p>
 
 
-
+            <!-- beställningsformulär som visas för en speciell rätt -->
             @if (activeDishId === dish.id) {
             <div class="order-form-container">
-                <form #myForm="ngForm" (ngSubmit)="submitOrder(dish.id!)">
+                <form #myForm="ngForm" (ngSubmit)="submitOrder(dish)">
 
                     <div class="form-group">
                         <label>Namn:</label>
@@ -61,6 +61,13 @@
                     <div class="form-group">
                         <label>Antal portioner:</label>
                         <input type="number" name="quantity" [(ngModel)]="orderData.quantity" min="1" required>
+                    </div>
+
+                    <!-- knappen som skickar beställningen, den går inte att trycka förrän formuläret är korrekt ifyllt -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-order " [disabled]="!myForm.valid">
+                            Lägg beställning
+                        </button>
                     </div>
                 </form>
             </div>
