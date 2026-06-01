@@ -111,3 +111,8 @@
   display: block;   
   margin: 10px auto 0 auto; 
 }
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+}

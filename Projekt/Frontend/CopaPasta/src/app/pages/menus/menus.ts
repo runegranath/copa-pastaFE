@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { Dish } from '../../models/dish';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menus',
@@ -17,6 +18,13 @@ export class Menus {
   menuService = inject(MenuService);
   private cdr = inject(ChangeDetectorRef);
   private snackBar = inject(MatSnackBar);
+  authService = inject(AuthService);
+
+  // Referens för inloggningsstatus som används i html
+  isAdmin = this.authService.isLoggedIn;
+
+  // håller på vilken rätt som är i redigeringsläge, null om ingen är det.
+  editingDishId = signal<number | null>(null);
 
   // håller koll på veckonummer som användare väljer och startar på aktuell vecka
   selectedWeek = signal<number>(this.getCurrentWeekNumber());
@@ -46,6 +54,19 @@ export class Menus {
     quantity: 1,
   };
 
+  // metod för att ändra rätter i redigeringsläge
+  startEdit(dishId: number) {
+    this.editingDishId.set(dishId);
+  }
+
+  saveDishChanges(dish: Dish) {
+    console.log('Sparar ändringar:', dish);
+    
+    // Sätter null för att stänga redigeringsläget 
+    this.editingDishId.set(null);
+    this.snackBar.open('Maträtten har uppdaterats. ', 'Stäng', { duration: 3000 });
+  }
+
   // Metod för att öppna/stänga beställningsformuläret för en specifik rätt
   toggleOrderForm(dishId: number) {
     if (this.activeDishId === dishId) {
@@ -63,8 +84,6 @@ export class Menus {
       dish_id: dish.id,
       ...this.orderData,
     };
-
-    // submittedPickupTime = signal<string | null>(null);
 
     // Skicka beställningen till backend
     this.menuService.createOrder(completeOrder).subscribe({

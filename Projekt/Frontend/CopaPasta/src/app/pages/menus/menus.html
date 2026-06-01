@@ -21,23 +21,57 @@
                 <h3>{{ dish.day_of_week }}</h3>
             </span>
 
+            @if (isAdmin() && editingDishId() === dish.id) {
+            <div class="edit-dish-form">
+                <div class="form-group">
+                    <label>Maträttens namn:</label>
+                    <input [(ngModel)]="dish.title" class="edit-input-title" placeholder="Titel">
+                </div>
+
+                <div class="form-group">
+                    <label>Pris (kr):</label>
+                    <input [(ngModel)]="dish.price" type="number" class="edit-input-price" placeholder="Pris">
+                </div>
+
+                <div class="form-group">
+                    <label>Beskrivning:</label>
+                    <textarea [(ngModel)]="dish.description" class="edit-input-desc"
+                        placeholder="Beskrivning"></textarea>
+                </div>
+
+                <div class="edit-actions">
+                    <button class="btn-save" (click)="saveDishChanges(dish)">Spara ändringar</button>
+                    <button class="btn-cancel" (click)="editingDishId.set(null)">Avbryt</button>
+                </div>
+            </div>
+            }
+
+            @else {
             <div class="dish-header">
                 <strong>{{ dish.title }}</strong>
                 <div class="dish-right-side">
                     <span class="dish-price">{{ dish.price }} kr</span>
 
-                    <!-- knappen som tar fram beställningsformuläret, vi lovar att ett id finns med !-->
+                    <!-- knappen som tar fram beställningsformuläret, vi lovar att ett id finns med -->
+                    @if (!isAdmin()) {
                     <button class="btn-order-toggle" (click)="toggleOrderForm(dish.id!)">
                         {{ activeDishId === dish.id ? 'Stäng' : 'Förbeställ TakeAway' }}
                     </button>
+                    }
+
+                    <!-- Visa redigeringsknapp endast för admins -->
+                    @if (isAdmin()) {
+                    <button class="btn-edit-dish" (click)="startEdit(dish.id!)">
+                        Ändra rätt
+                    </button>
+                    }
                 </div>
             </div>
 
             <p class="dish-description">{{ dish.description }}</p>
 
-
             <!-- beställningsformulär som visas för en speciell rätt -->
-            @if (activeDishId === dish.id) {
+            @if (activeDishId === dish.id && !isAdmin()) {
             <div class="order-form-container">
                 <form #myForm="ngForm" (ngSubmit)="submitOrder(dish)">
 
@@ -71,6 +105,7 @@
                     </div>
                 </form>
             </div>
+            }
             }
         </div>
         } @empty {

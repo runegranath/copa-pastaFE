@@ -15,7 +15,6 @@ export class MenuService {
   private orderUrl = 'http://localhost:3000/api/orders'; // orders-rutten
 
   getMenus(weekNumber: number, year: number): Observable<Dish[]> {
-     
     return this.http.get<Dish[]>(`${this.getUrl}?week_number=${weekNumber}&year=${year}`); // Hämtar veckans meny som en Observable och skickar med veckonummer som query-parameter
   }
 
@@ -35,11 +34,25 @@ export class MenuService {
   }
 
   getAllOrders(): Observable<any[]> {
-  const token = localStorage.getItem('token');
-  const headers = {
-    authorization: `Bearer ${token}`,
-  };
-  return this.http.get<any[]>('http://localhost:3000/api/orders', { headers });
-}
+    const token = localStorage.getItem('token');
+    const headers = {
+      authorization: `Bearer ${token}`,
+    };
+    return this.http.get<any[]>('http://localhost:3000/api/orders', { headers });
+  }
 
+  updateOrderStatus(id: number, status: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = { authorization: `Bearer ${token}` };
+
+    // ready skickas som status när en order klickas klar i adminsidan
+    return this.http.put(`${this.orderUrl}/${id}`, { order_status: status }, { headers });
+  }
+
+  deleteOrder(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = { authorization: `Bearer ${token}` };
+
+    return this.http.delete(`${this.orderUrl}/${id}`, { headers });
+  }
 }

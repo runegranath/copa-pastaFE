@@ -1,36 +1,37 @@
 <section class="orders-container">
-  <h2>Inkomna Beställningar</h2>
+    <h2>Inkomna beställningar</h2>
 
-  <div class="orders-grid">
-    @for (order of adminOrders(); track order.id) {
-      <div class="order-card" [class.pending]="order.order_status === 'pending'"> <!-- [class.pending] låter Angular veta om klassen ska läggas till -->
-        <div class="card-header">
-          <h3>Order #{{ order.id }}</h3>
-          <span class="status-badge">{{ order.order_status }}</span>
-        </div>
+    <div class="orders-grid">
+        @for (order of adminOrders(); track order.id) {
+        <div class="order-card" [class.pending]="order.order_status === 'pending'">
+            <!-- [class.pending] låter Angular veta om klassen ska läggas till -->
+            <div class="card-header">
+                <h3>Order #{{ order.id }}</h3>
+                <span class="status-badge">{{ order.order_status }}</span>
+            </div>
 
-        <div class="card-body">
-          <p><strong>Kund:</strong> {{ order.customer_name }}</p>
-          <p><strong>Telefon:</strong> {{ order.customer_phone }}</p>
-          <p><strong>Maträtt:</strong> {{ order.title }} ({{ order.day_of_week }})</p>
-          <p><strong>Antal:</strong> {{ order.quantity }} st</p>
-          
-          <div class="pickup-alert">
-            <strong>Hämtas kl: {{ order.pickup_time }}</strong>
-          </div>
-        </div>
+            <div class="card-body">
+                <p><strong>Kund:</strong> {{ order.customer_name }}</p>
+                <p><strong>Telefon:</strong> {{ order.customer_phone }}</p>
+                <p><strong>Maträtt:</strong> {{ order.title }} ({{ order.day_of_week }})</p>
+                <p><strong>Antal:</strong> {{ order.quantity }} st</p>
 
-        <div class="card-actions">
-          <button class="btn-ready" (click)="updateStatus(order.id, 'ready')">
-            Klar för avhämtning
-          </button>
-          <button class="btn-delete" (click)="deleteOrder(order.id)">
-            Ta bort
-          </button>
+                <div class="pickup-alert">
+                    <strong>Hämtas kl: {{ order.pickup_time }}</strong>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <button class="btn-ready" (click)="updateStatus(order.id, 'ready')" [disabled]="order.order_status === 'ready'">
+                    {{ order.order_status === 'ready' ? 'UPPHÄMTAS' : 'Klar för avhämtning' }}
+                </button>
+                <button class="btn-delete" (click)="deleteOrder(order.id)">
+                    Ta bort
+                </button>
+            </div>
         </div>
-      </div>
-    } @empty {
-      <p class="no-orders">Inga beställningar har kommit in än.</p>
-    }
-  </div>
+        } @empty {
+        <p class="no-orders">Inga beställningar har kommit in än.</p>
+        }
+    </div>
 </section>
