@@ -10,10 +10,10 @@ import { Dish } from '../models/dish';
 })
 export class MenuService {
   private http = inject(HttpClient);
-  private getUrl: string = 'http://localhost:3000/api/menus'; // getrutt för meny
-  private addUrl: string = 'http://localhost:3000/api/addmenu'; // postrutt för meny
-  private orderUrl = 'http://localhost:3000/api/orders'; // orders-rutten
-  private deleteUrl = 'http://localhost:3000/api/dishes'; // deleterutt för rätter på menyn
+  private getUrl: string = 'https://bbw-be.onrender.com/api/menus'; // getrutt för meny
+  private addUrl: string = 'https://bbw-be.onrender.com/api/addmenu'; // postrutt för meny
+  private orderUrl = 'https://bbw-be.onrender.com/api/orders'; // orders-rutten
+  private deleteUrl = 'https://bbw-be.onrender.com/api/dishes'; // deleterutt för rätter på menyn
 
   getMenus(weekNumber: number, year: number): Observable<Dish[]> {
     return this.http.get<Dish[]>(`${this.getUrl}?week_number=${weekNumber}&year=${year}`); // Hämtar veckans meny som en Observable och skickar med veckonummer som query-parameter
@@ -39,7 +39,7 @@ export class MenuService {
     const headers = {
       authorization: `Bearer ${token}`,
     };
-    return this.http.get<any[]>('http://localhost:3000/api/orders', { headers });
+    return this.http.get<any[]>('https://bbw-be.onrender.com/api/orders', { headers });
   }
 
   updateOrderStatus(id: number, status: string): Observable<any> {
