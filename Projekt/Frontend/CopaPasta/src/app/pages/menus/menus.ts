@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, computed, inject, signal } from '@angular
 import { MenuService } from '../../services/menu.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { Dish } from '../../models/dish';
@@ -30,6 +30,16 @@ export class Menus {
   selectedWeek = signal<number>(this.getCurrentWeekNumber());
   selectedYear = signal<number>(new Date().getFullYear());
 
+  // Sorteringsordning för frontend
+  private dayOrder: { [key: string]: number } = {
+    Måndag: 1,
+    Tisdag: 2,
+    Onsdag: 3,
+    Torsdag: 4,
+    Fredag: 5,
+    'Veckans vegetariska': 6,
+  };
+
   private weekYear$ = toObservable(
     computed(() => ({
       week: this.selectedWeek(),
@@ -39,7 +49,20 @@ export class Menus {
 
   // konvertera den senaste Observable till en signal som komponenten kan använda som innehåller rätter för vald vecka
   menus = toSignal(
-    this.weekYear$.pipe(switchMap(({ week, year }) => this.menuService.getMenus(week, year))),
+    this.weekYear$.pipe(
+      switchMap(({ week, year }) => this.menuService.getMenus(week, year)),
+
+      // mappning eller sorteringen som sköts i frontend av rätter
+      map((dishes: Dish[]) => {
+        return [...dishes].sort((a, b) => {
+          // Hämta ordningsnummer från dayOrder, eller ge 99 om dagen inte finns i listan
+          const orderA = this.dayOrder[a.day_of_week] || 99;
+          const orderB = this.dayOrder[b.day_of_week] || 99;
+
+          return orderA - orderB; // Sorterar stigande
+        });
+      }),
+    ),
     { initialValue: [] },
   );
 

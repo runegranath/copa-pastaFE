@@ -5,6 +5,7 @@
             <!--exact för att markera som aktiv endast på huvudsidan -->
             <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Hem</a></li>
             <li><a routerLink="/menus" routerLinkActive="active">Meny</a></li>
+            <li><a routerLink="/about" routerLinkActive="active">Om oss</a></li>
             @if(authService.isLoggedIn()) {
             <li><a routerLink="/addmenu" routerLinkActive="active">Lägg till meny</a></li>
             <li><a routerLink="/register" routerLinkActive="active">Registera</a></li>
