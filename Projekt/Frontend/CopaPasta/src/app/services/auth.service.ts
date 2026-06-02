@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  url: string = 'https://bbw-be.onrender.com';
+  url: string = 'https://bbw-be.onrender.com/api';
 
   token = signal(localStorage.getItem('token') || '');
   isLoggedIn = computed(() => !!this.token()); // returnera true om token finns, annars false
