@@ -13,6 +13,7 @@ export class MenuService {
   private getUrl: string = 'http://localhost:3000/api/menus'; // getrutt för meny
   private addUrl: string = 'http://localhost:3000/api/addmenu'; // postrutt för meny
   private orderUrl = 'http://localhost:3000/api/orders'; // orders-rutten
+  private deleteUrl = 'http://localhost:3000/api/dishes'; // deleterutt för rätter på menyn
 
   getMenus(weekNumber: number, year: number): Observable<Dish[]> {
     return this.http.get<Dish[]>(`${this.getUrl}?week_number=${weekNumber}&year=${year}`); // Hämtar veckans meny som en Observable och skickar med veckonummer som query-parameter
@@ -52,7 +53,16 @@ export class MenuService {
   deleteOrder(id: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = { authorization: `Bearer ${token}` };
-
     return this.http.delete(`${this.orderUrl}/${id}`, { headers });
+  }
+
+  deleteEntireWeek(year: number, week: number): Observable<void> {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      authorization: `Bearer ${token}`,
+    };
+
+    return this.http.delete<void>(`${this.deleteUrl}/week/${year}/${week}`, { headers });
   }
 }

@@ -61,8 +61,8 @@ export class Menus {
 
   saveDishChanges(dish: Dish) {
     console.log('Sparar ändringar:', dish);
-    
-    // Sätter null för att stänga redigeringsläget 
+
+    // Sätter null för att stänga redigeringsläget
     this.editingDishId.set(null);
     this.snackBar.open('Maträtten har uppdaterats. ', 'Stäng', { duration: 3000 });
   }
@@ -170,5 +170,37 @@ export class Menus {
 
     // Räkna ut antalet veckor mellan de två torsdagarna
     return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000);
+  }
+
+  // metod för att bekräfta borttagning av en rätt
+  confirmDelete(dishTitle: string): void {
+    const week = this.selectedWeek();
+    const year = this.selectedYear();
+
+    const confirmDelete = confirm(
+      `Är du säker på att du vill ta bort "${dishTitle}"? Hela veckan kommer att raderas!`,
+    );
+
+    if (confirmDelete) {
+      this.deleteWeek(year, week);
+    }
+  }
+
+  deleteWeek(year: number, week: number): void {
+    this.menuService.deleteEntireWeek(year, week).subscribe({
+      next: () => {
+        // Switchmap aktiveras och uppdaterar selectedWeek-signalen vilket triggar en ny hämtning av menyn
+        this.selectedWeek.set(this.selectedWeek());
+
+        this.snackBar.open(`Vecka ${week} har tagits bort.`, 'Stäng', { duration: 3000 });
+        setTimeout(() => {
+          window.location.reload(); // Laddar om sidan efter 3,5sek för att säkerställa att alla komponenter uppdateras korrekt
+        }, 500);
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open('Kunde inte ta bort veckan. ❌', 'Stäng', { duration: 3000 });
+      },
+    });
   }
 }

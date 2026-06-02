@@ -14,7 +14,7 @@ export class AuthService {
   private http = inject(HttpClient);
   url: string = 'http://localhost:3000/api';
 
-  token = signal(localStorage.getItem("token") || "");
+  token = signal(localStorage.getItem('token') || '');
   isLoggedIn = computed(() => !!this.token()); // returnera true om token finns, annars false
 
   router = inject(Router);
@@ -25,20 +25,21 @@ export class AuthService {
   }
 
   // Inloggning
-  login(user: User) : Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.url + "/login", user)
-    .pipe(                       // När vi får svaret, kör en tap 
-      tap(response => {          // spara token i signalen och localStorage
+  login(user: User): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.url + '/login', user).pipe(
+      // När vi får svaret, kör en tap
+      tap((response) => {
+        // spara token i signalen och localStorage
         this.token.set(response.token);
-        localStorage.setItem("token", response.token);
-      })
-    )
+        localStorage.setItem('token', response.token);
+      }),
+    );
   }
 
   // Utloggning
-  logout() : void {
-    this.token.set(""); // Rensa token i signalen
-    localStorage.removeItem("token"); // Ta bort token från localStorage
+  logout(): void {
+    this.token.set(''); // Rensa token i signalen
+    localStorage.removeItem('token'); // Ta bort token från localStorage
     this.router.navigate(['/']);
   }
 }

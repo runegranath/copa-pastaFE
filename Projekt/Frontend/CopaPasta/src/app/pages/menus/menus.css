@@ -116,3 +116,31 @@
   display: flex;
   gap: 10px;
 }
+
+.btn-edit-dish {
+  background: #746927; 
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-edit-dish:hover {
+  background: #5b491b; 
+}
+
+.btn-delete-dish {
+  background: #dc2626; 
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem; 
+  transition: background 0.2s ease;
+}
+
+.btn-delete-dish:hover {
+  background: #b91c1c; 
+}

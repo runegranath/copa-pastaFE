@@ -15,7 +15,7 @@
     </div>
 
     <div class="menu-item">
-        @for (dish of menus(); track dish.day_of_week) {
+        @for (dish of menus(); track dish.id) {
         <div class="dish-card">
             <span class="day-marker">
                 <h3>{{ dish.day_of_week }}</h3>
@@ -64,6 +64,9 @@
                     <button class="btn-edit-dish" (click)="startEdit(dish.id!)">
                         Ändra rätt
                     </button>
+                    <button class="btn-delete-dish" (click)="confirmDelete(dish.title)">
+                        Ta bort rätt
+                    </button>
                     }
                 </div>
             </div>
@@ -88,8 +91,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Upphämtningstid:</label>
-                        <input type="time" name="pickup_time" [(ngModel)]="orderData.pickup_time" required>
+                        <label for="pickup">Tid för avhämtning:</label>
+                        <select id="pickup" name="pickup_time" [(ngModel)]="orderData.pickup_time" required>
+                            <option value="" disabled selected>Välj tid för avhämtning:</option>
+                            <option value="11:15">11:15</option>
+                            <option value="11:30">11:30</option>
+                            <option value="11:45">11:45</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:15">12:15</option>
+                            <option value="12:30">12:30</option>
+                            <option value="12:45">12:45</option>
+                            <option value="13:00">13:00</option>
+                        </select>
                     </div>
 
                     <div class="form-group">

@@ -3,8 +3,8 @@
 
     <div class="orders-grid">
         @for (order of adminOrders(); track order.id) {
+        <!-- [class.pending] låter Angular veta om klassen ska läggas till -->
         <div class="order-card" [class.pending]="order.order_status === 'pending'">
-            <!-- [class.pending] låter Angular veta om klassen ska läggas till -->
             <div class="card-header">
                 <h3>Order #{{ order.id }}</h3>
                 <span class="status-badge">{{ order.order_status }}</span>
@@ -22,10 +22,11 @@
             </div>
 
             <div class="card-actions">
-                <button class="btn-ready" (click)="updateStatus(order.id, 'ready')" [disabled]="order.order_status === 'ready'">
+                <button class="btn-ready" (click)="updateStatus(order.id, 'ready')"
+                    [disabled]="order.order_status === 'ready'">
                     {{ order.order_status === 'ready' ? 'UPPHÄMTAS' : 'Klar för avhämtning' }}
                 </button>
-                <button class="btn-delete" (click)="deleteOrder(order.id)">
+                <button class="btn-delete" (click)="deleteOrder(order.id)" [disabled]="order.order_status !== 'ready'"> <!--Går bara att ta bort om ordern är ready -->
                     Ta bort
                 </button>
             </div>
