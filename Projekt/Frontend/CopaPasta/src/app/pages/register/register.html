@@ -1,10 +1,12 @@
-
-
 <form (ngSubmit)="register()">
     <h2>Registrera konto</h2>
+
+    @if (message()) {
     <div class="error-message">
         {{ message() }}
     </div>
+    }
+
     <label for="email">E-post:</label>
     <input type="text" id="email" name="email" [(ngModel)]="email">
 
@@ -13,4 +15,3 @@
 
     <button type="submit">Registrera konto</button>
 </form>
-// vidareutveckling validering 

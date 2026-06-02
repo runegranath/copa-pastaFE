@@ -4,6 +4,7 @@ import { Menu } from '../../models/menu';
 import { MenuResponse } from '../../models/menu-response';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-addmenu',
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class Addmenu {
   message = signal('');
   menuService = inject(MenuService);
+  snackBar = inject(MatSnackBar);
 
   // Förifyllda värden
   year: number = 2026;
@@ -36,8 +38,18 @@ export class Addmenu {
   };
 
   addMenu(): void {
-    if (!this.week_number) {
-      this.message.set('Du måste fylla i ett veckonummer!');
+    // rensa gamla meddelanden
+    this.message.set('');
+
+    // ett veckonummer måste finnas inom ramarna av 1-53
+    if (!this.week_number || this.week_number < 1 || this.week_number > 53) {
+      this.message.set('Ange ett giltigt veckonummer (1-53)!');
+      return;
+    }
+
+    // ett år måste finnas inom rimliga gränser
+    if (!this.year || this.year < 2020 || this.year > 2100) {
+      this.message.set('Ange ett giltigt år!');
       return;
     }
 
@@ -54,6 +66,13 @@ export class Addmenu {
       return;
     }
 
+    // filtrera bort rätter med negativa priser
+    const hasNegativePrice = filledDishes.some(dish => dish.price <= 0);
+    if (hasNegativePrice) {
+      this.message.set('Alla ifyllda rätter måste ha ett giltigt pris över 0 kr.');
+      return;
+    }
+
     const newMenu: Menu = {
       year: Number(this.year),
       week_number: Number(this.week_number),
@@ -62,9 +81,19 @@ export class Addmenu {
 
     this.menuService.addMenu(newMenu).subscribe({
       next: (res: MenuResponse) => {
-        this.message.set(res.message);
-        this.standingVeg.title = '';       // Rensa formuläret
-        this.standingVeg.description = '';
+        this.snackBar.open(res.message || 'Menyn har sparats!', 'Stäng', {
+          duration: 4000, 
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+
+        // Återställ och städa formuläret
+        this.standingVeg.title = '';       
+        this.standingVeg.description = ''; 
+        this.dishes.forEach(dish => {
+          dish.title = '';
+          dish.description = '';
+        });
         this.week_number = this.week_number + 1;
       },
       error: (err) => {

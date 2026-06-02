@@ -39,10 +39,12 @@
         <legend>Veckans stående vegetariska</legend>
 
         <label for="veg-title">Rättens namn:</label>
-        <input type="text" id="veg-title" name="veg-title" [(ngModel)]="standingVeg.title" placeholder="t.ex. Vegansk Lasagne">
+        <input type="text" id="veg-title" name="veg-title" [(ngModel)]="standingVeg.title"
+            placeholder="t.ex. Vegansk Lasagne">
 
         <label for="veg-desc">Beskrivning:</label>
-        <textarea id="veg-desc" name="veg-desc" [(ngModel)]="standingVeg.description" placeholder="Ingredienser..."></textarea>
+        <textarea id="veg-desc" name="veg-desc" [(ngModel)]="standingVeg.description"
+            placeholder="Ingredienser..."></textarea>
 
         <label for="veg-price">Pris (kr):</label>
         <input type="number" id="veg-price" name="veg-price" [(ngModel)]="standingVeg.price">
@@ -50,4 +52,3 @@
 
     <button type="submit">Lagra meny</button>
 </form>
-<!-- vidareutveckling validering -->
