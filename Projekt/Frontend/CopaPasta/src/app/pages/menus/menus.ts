@@ -86,8 +86,7 @@ export class Menus {
     console.log('Sparar ändringar:', dish);
 
     this.menuService.updateDish(dish).subscribe({
-      next: (res) => {
-        console.log('Svar från backend vid updateDish:', res);
+      next: () => {
         // Sätter null för att stänga redigeringsläget
         this.editingDishId.set(null);
 
