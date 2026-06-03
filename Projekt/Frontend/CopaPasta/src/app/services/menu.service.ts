@@ -13,7 +13,8 @@ export class MenuService {
   private getUrl: string = 'https://bbw-be.onrender.com/api/menus'; // getrutt för meny
   private addUrl: string = 'https://bbw-be.onrender.com/api/addmenu'; // postrutt för meny
   private orderUrl = 'https://bbw-be.onrender.com/api/orders'; // orders-rutten
-  private deleteUrl = 'https://bbw-be.onrender.com/api/dishes'; // deleterutt för rätter på menyn
+  private dishesUrl = 'https://bbw-be.onrender.com/api/dishes'; // delete/put-rutt för rätter på menyn
+ 
 
   getMenus(weekNumber: number, year: number): Observable<Dish[]> {
     return this.http.get<Dish[]>(`${this.getUrl}?week_number=${weekNumber}&year=${year}`); // Hämtar veckans meny som en Observable och skickar med veckonummer som query-parameter
@@ -63,6 +64,16 @@ export class MenuService {
       authorization: `Bearer ${token}`,
     };
 
-    return this.http.delete<void>(`${this.deleteUrl}/week/${year}/${week}`, { headers });
+    return this.http.delete<void>(`${this.dishesUrl}/week/${year}/${week}`, { headers });
+  }
+
+  updateDish(dish: Dish): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      authorization: `Bearer ${token}`,
+    };
+
+    return this.http.put(`${this.dishesUrl}/${dish.id}`, dish, { headers });
   }
 }
