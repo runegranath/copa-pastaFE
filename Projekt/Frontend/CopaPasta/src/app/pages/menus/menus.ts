@@ -85,9 +85,24 @@ export class Menus {
   saveDishChanges(dish: Dish) {
     console.log('Sparar ändringar:', dish);
 
-    // Sätter null för att stänga redigeringsläget
-    this.editingDishId.set(null);
-    this.snackBar.open('Maträtten har uppdaterats. ', 'Stäng', { duration: 3000 });
+    this.menuService.updateDish(dish).subscribe({
+      next: (res) => {
+        console.log('Svar från backend vid updateDish:', res);
+        // Sätter null för att stänga redigeringsläget
+        this.editingDishId.set(null);
+
+        this.snackBar.open('Maträtten har uppdaterats.', 'Stäng', {
+          duration: 3000,
+        });
+      },
+      error: (err) => {
+        console.error(err);
+
+        this.snackBar.open('Kunde inte uppdatera maträtten.', 'Stäng', {
+          duration: 3000,
+        });
+      },
+    });
   }
 
   // Metod för att öppna/stänga beställningsformuläret för en specifik rätt

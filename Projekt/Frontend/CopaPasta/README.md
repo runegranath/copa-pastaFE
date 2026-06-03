@@ -39,7 +39,7 @@ Applikationen kommunicerar med backenden via HTTP-anrop (`fetch`). Standardadres
 * **Sessionshantering:** Vid lyckad inloggning sparas administratörens JWT-token i webbläsarens `localStorage`.
 * **Auktorisering:** Skripten på de skyddade sidorna kontrollerar automatiskt om en token finns sparad. Saknas den, skickas användaren direkt tillbaka till inloggningssidan.
 * **API-säkerhet:** Alla skyddade anrop (`POST /api/addmenu`, `GET /api/orders` osv.) skickar med denna token i HTTP-headern som en `Bearer`-token för att valideras av backenden.
-* **Standardiserad admin** På grund av användningen av SQlite och Render har ett standardadminkonto lagts till 
+* **Begränsningar med SQlite och Render** På grund av användningen av SQlite och Render kan menyer bli rensade snabbt. Därför skapades ett standardinloggningskonto i backend.
 
 ---
 
