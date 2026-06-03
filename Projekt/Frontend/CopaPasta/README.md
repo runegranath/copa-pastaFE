@@ -1,59 +1,45 @@
-# CopaPasta
+# Veckomeny & Beställningssystem - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Detta är frontenden för en fiktiv lunchrestaurang med dess veckomeny- och beställningssystem. Gränssnittet är uppdelat i en publik del där kunder kan se veckans meny och lägga beställningar, samt en skyddad administrationsdel för restaurangens personal där de kan hantera menyer/ordrar och registrera användare.
 
-## Development server
+livelänk finns här: https://bbw-fe.onrender.com
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+* **Publik Veckomeny:** Visar aktuella maträtter sorterade efter veckodag för ett valt år och veckonummer, börjar på nuvarande vecka.
+* **Beställningsformulär:** Tillåter kunder att välja en maträtt, ange namn, telefonnummer, önskad upphämtningstid samt antal portioner.
+* **Administratörsinloggning:** Ett säkert formulär för personalen att logga in med e-post och lösenord för att erhålla en JWT-token.
+* **Administratörsregistrering:** Ett validerande formulär för befintlig inloggad personal att kunna skapa nya användare med. 
+* **Orderhantering (Admin):** En skyddad vy där personalen kan se inkomna beställningar, uppdatera orderstatus (t.ex. från "pending" till "klar") samt radera gamla ordrar.
+* **Menyhantering (Admin):** Möjlighet för inloggade administratörer att skapa och publicera en helt ny veckomeny med rätter för hela veckan, samt radera/uppdatera befintliga menyer.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Översikt av vyer
 
-```bash
-ng generate component component-name
-```
+Applikationen är uppbyggd kring följande huvudsidor:
+* `home.html` – Den publika startsidan som välkomnar användaren och bjuder in till att se menyn.
+* `login.html` – Inloggningssidan för administratörer.
+* `orders.html` – Instrumentpanelen för personalen där ordrar hanteras (kräver giltig token).
+* `addmenu.html` – Verktyget för att skapa och publicera nya veckomenyer (kräver giltig token).
+* `register.html` - Sidan där inloggade kan skapa nya konton (kräver giltig token).
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
 
-## Building
+### Hantera API-anslutningen
+Applikationen kommunicerar med backenden via HTTP-anrop (`fetch`). Standardadressen i skripten är inställd mot backend-servern på Render-URL:en `https://bbw-be.onrender.com` .          
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## Säkerhet och state-hantering
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+* **Sessionshantering:** Vid lyckad inloggning sparas administratörens JWT-token i webbläsarens `localStorage`.
+* **Auktorisering:** Skripten på de skyddade sidorna kontrollerar automatiskt om en token finns sparad. Saknas den, skickas användaren direkt tillbaka till inloggningssidan.
+* **API-säkerhet:** Alla skyddade anrop (`POST /api/addmenu`, `GET /api/orders` osv.) skickar med denna token i HTTP-headern som en `Bearer`-token för att valideras av backenden.
+* **Standardiserad admin** På grund av användningen av SQlite och Render har ett standardadminkonto lagts till 
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
