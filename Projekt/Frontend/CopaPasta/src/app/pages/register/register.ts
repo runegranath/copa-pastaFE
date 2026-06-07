@@ -45,6 +45,7 @@ export class Register {
       created: new Date(),
     };
 
+    // Skickar iväg anropet backend och prenumererar på svaret från authService
     this.authService.register(user).subscribe({
       next: (res: RegisterResponse) => {
         this.message.set(res.message);

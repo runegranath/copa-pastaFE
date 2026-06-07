@@ -4,7 +4,6 @@ import { Observable, tap } from 'rxjs';
 import { RegisterResponse } from '../models/register-response';
 import { User } from '../models/user';
 import { LoginResponse } from '../models/login-response';
-import { Login } from '../pages/login/login';
 import { Router } from '@angular/router';
 
 @Injectable({

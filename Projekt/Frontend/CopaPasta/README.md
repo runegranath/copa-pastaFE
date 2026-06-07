@@ -2,7 +2,7 @@
 
 Detta är frontenden för en fiktiv lunchrestaurang med dess veckomeny- och beställningssystem. Gränssnittet är uppdelat i en publik del där kunder kan se veckans meny och lägga beställningar, samt en skyddad administrationsdel för restaurangens personal där de kan hantera menyer/ordrar och registrera användare.
 
-livelänk finns här: https://bbw-fe.onrender.com
+livelänk finns här: https://bbw-fe.onrender.com Observera att förinlagda menyer kan ta upp till 30 sekunder att ladda.
 
 ---
 
