@@ -4,6 +4,7 @@ import { Menu } from '../models/menu';
 import { Observable } from 'rxjs';
 import { MenuResponse } from '../models/menu-response';
 import { Dish } from '../models/dish';
+import { OrderResponse } from '../models/order-response';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +32,8 @@ export class MenuService {
     return this.http.post<MenuResponse>(this.addUrl, menu, { headers });
   }
 
-  createOrder(orderData: any): Observable<any> {
-    return this.http.post(this.orderUrl, orderData);
+  createOrder(orderData: any): Observable<OrderResponse> {
+    return this.http.post<OrderResponse>(this.orderUrl, orderData);
   }
 
   getAllOrders(): Observable<any[]> {

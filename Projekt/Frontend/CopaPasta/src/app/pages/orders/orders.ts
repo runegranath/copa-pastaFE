@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
+import { OrderResponse } from '../../models/order-response';
+import { AdminOrder } from '../../models/admin-order';
 
 @Component({
   selector: 'app-orders',
@@ -12,7 +14,7 @@ export class Orders {
   private menuService = inject(MenuService);
 
   // Signalen som håller orderlistan
-  adminOrders = signal<any[]>([]);
+  adminOrders = signal<AdminOrder[]>([]);
 
   ngOnInit() {
     this.loadOrders();
@@ -20,16 +22,16 @@ export class Orders {
 
   loadOrders() {
     this.menuService.getAllOrders().subscribe({
-      next: (data) => {
+      next: (data: AdminOrder[]) => { // det är en array av AdminOrder som landar i next
         this.adminOrders.set(data);
       },
       error: (err) => console.error(err),
     });
   }
 
-  updateStatus(orderId: number, newStatus: string) {
+  updateStatus(orderId: number, newStatus: 'pending' | 'ready') {
     this.menuService.updateOrderStatus(orderId, newStatus).subscribe({
-      next: (res) => {
+      next: (res: OrderResponse) => {
         console.log(res.message);
 
         // adminOrders-signalen uppdateras genom att mappa över orderlistan och ändra det som tillkommit, dvs orderstatus
@@ -39,15 +41,13 @@ export class Orders {
           ),
         );
       },
-      error: (err) => {
-        console.error('Kunde inte uppdatera statusen:', err);
-      },
+      error: (err) => console.error(err),
     });
   }
 
   deleteOrder(orderId: number) {
     this.menuService.deleteOrder(orderId).subscribe({
-      next: (res) => {
+      next: (res: OrderResponse) => {
         console.log(res.message);
 
         // filter gör en ny lista med alla orders utom den som raderats och uppdaterar signalen
